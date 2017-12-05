@@ -19,7 +19,19 @@ namespace RMA
 
             menuList = new List<MasterMenuItem>();
             menuList.Add(new MasterMenuItem("Settings", null, typeof(SettingsPage)));
-		}
+
+            // Setting our list to be ItemSource for ListView in MainPage.xaml
+            navigationDrawerList.ItemsSource = menuList;
+            // Initial navigation, this can be used for our home page
+            Detail = new NavigationPage((Page)Activator.CreateInstance(typeof(ViewMain)));
+            this.BindingContext = new
+            {
+                Header = "",
+                Image = "http://www3.hilton.com/resources/media/hi/GSPSCHF/en_US/img/shared/full_page_image_gallery/main/HH_food_22_675x359_FitToBoxSmallDimension_Center.jpg",
+                //Footer = "         -------- Welcome To HotelPlaza --------           "
+                Footer = "Welcome To Hotel Plaza"
+            };
+        }
 
         private void OnMenuItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
