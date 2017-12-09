@@ -4,9 +4,12 @@
              x:Class="RMA.Views.ViewMain">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
+            <Entry x:Name="wantedTempInput" Keyboard="Numeric" WidthRequest="10" VerticalOptions="Center"/>
+            <Label x:Name="currentTempLbl" Text="Trenutna temperatura: "
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
+            <Switch x:Name="onOffSwitch" Toggled="onOffSwitch_Toggled"/>
+            <Button Text="batn" Clicked="Button_Clicked"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

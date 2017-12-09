@@ -4,9 +4,12 @@
              x:Class="RMA.Views.SettingsPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Settings!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Label Text="API URL:"/>
+            <Entry x:Name="apiUrl"/>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Pozadinslo osvjetljenje:"/>
+                <Switch x:Name="backlightSwitch"/>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

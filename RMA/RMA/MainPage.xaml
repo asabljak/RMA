@@ -17,9 +17,11 @@
              data that you want to have in your menu drawer
         -->
                 <StackLayout.Children >
-                    <Label Text="Header" />
+                    <Label Text="{Binding Header}" />
 
-                    <Label Text="futer" />
+                    <Image Source="{Binding Image}" Aspect="Fill" />
+
+                    <Label Text="{Binding Footer}" />
                 </StackLayout.Children>
 
                 <ListView x:Name="navigationDrawerList"
@@ -33,19 +35,24 @@
                             <ViewCell>
 
                                 <!-- Main design for our menu items -->
-                                <StackLayout VerticalOptions="FillAndExpand"
+                            <StackLayout VerticalOptions="FillAndExpand"
                              Orientation="Horizontal"
                              Padding="20,10,0,10"
                              Spacing="20">
 
-                               
-                                    <Label Text="bla"
-                         FontSize="Small"
-                         VerticalOptions="End"
-                         TextColor="Black"/>
-                                </StackLayout>
-                            </ViewCell>
-                        </DataTemplate>
+                                <Image Source="{Binding Icon}"
+                                 WidthRequest="40"
+                                 HeightRequest="40"
+                                 VerticalOptions="Start" />
+
+                                 <Label Text="{Binding Title}"
+                                 FontSize="Small"
+                                 VerticalOptions="End"
+                                 TextColor="Black"/>
+
+                             </StackLayout>
+                         </ViewCell>
+                       </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
 

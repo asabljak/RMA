@@ -16,6 +16,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)MenuItem\MasterMenuItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Data.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\SettingsPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
