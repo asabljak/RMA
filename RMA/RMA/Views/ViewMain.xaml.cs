@@ -11,22 +11,31 @@ using Plugin.Connectivity;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using RMA.Model;
+using Android.Content;
+using Android.Preferences;
+
+
 
 namespace RMA.Views
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class ViewMain : ContentPage
-	{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class ViewMain : ContentPage
+    {
         bool isOn;
         bool backlight;
-        //ISharedPreferences prefs;
+        ISharedPreferences prefs;
         bool isConnected;
+        string API_URL;
 
         public ViewMain()
         {
             InitializeComponent();
 
             isConnected = CrossConnectivity.Current.IsConnected;
+            prefs = PreferenceManager.GetDefaultSharedPreferences(Android.App.Application.Context);
+            backlight = prefs.GetBoolean("pref_backlight", true);
+            API_URL = prefs.GetString("pref_api_url", "http://192.168.1.100");
+
             if (isConnected)
             {
                 RefreshDataAsync();
@@ -35,8 +44,6 @@ namespace RMA.Views
             {
                 DisplayAlert("Problem s vezom", "Nemoguće povezivanje s mrežom. Provjerite vezu", "OK");
             }
-            //prefs = PreferenceManager.GetDefaultSharedPreferences(Android.App.Application.Context);
-            //backlight = prefs.GetBoolean("pref_key_backlight", true);
         }
 
         private async void RefreshDataAsync()
@@ -47,7 +54,7 @@ namespace RMA.Views
             Entry wantedTempInput = this.FindByName<Entry>("wantedTempInput");
 
             currentTempLbl.Text = data.curTemp.ToString();
-            wantedTempInput.Text += data.temp.ToString();
+            wantedTempInput.Text += data.wanTemp.ToString();
         }
 
         private async Task<Data> GetDataFromAPI()
@@ -56,8 +63,7 @@ namespace RMA.Views
 
             try
             {
-                // throw new Exception("PAM!");
-                var uri = new Uri("http://192.168.1.100/api.php");
+                var uri = new Uri(API_URL + "/api.php");
                 HttpClient client = new HttpClient();
                 client.Timeout = new System.TimeSpan(0, 0, 0, 1, 0);
                 // client.DefaultRequestHeaders.Host = "pizzaboy.de";
@@ -96,14 +102,16 @@ namespace RMA.Views
                 //Switch onOffSwitch = this.FindByName<Switch>("onOffSwitch");
                 Switch backlightSwitch = this.FindByName<Switch>("backlightSwitch");
 
-                Data data = new Data();
-                data.temp = Convert.ToInt32(wantedTempInput.Text);
-                data.isOn = isOn;
-                data.backlight = backlightSwitch.IsToggled;
+                Data data = new Data
+                {
+                    wanTemp = Convert.ToInt32(wantedTempInput.Text),
+                    isOn = isOn,
+                    backlight = this.backlight
+                };
 
                 var json = JsonConvert.SerializeObject(data);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await client.PostAsync("http://192.168.1.100/reciver.php", content);
+                HttpResponseMessage response = await client.PostAsync(API_URL + "/reciver.php", content);
 
             }
 
