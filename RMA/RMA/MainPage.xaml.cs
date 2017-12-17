@@ -1,34 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms;
-using RMA.MenuItem;
 using RMA.Views;
 
 namespace RMA
 {
 	public partial class MainPage : MasterDetailPage
 	{
-        List<MasterMenuItem> menuList { get; set; }
+        List<MasterMenuItem> MenuList { get; set; }
 
         public MainPage()
 		{
 			InitializeComponent();
 
-            menuList = new List<MasterMenuItem>();
-            menuList.Add(new MasterMenuItem("Settings", null, typeof(SettingsPage)));
-            navigationDrawerList.ItemsSource = menuList;
+            MenuList = new List<MasterMenuItem>();
+            MenuList.Add(new MasterMenuItem("Settings", null, typeof(SettingsPage)));
+            navigationDrawerList.ItemsSource = MenuList;
 
             Detail = new NavigationPage((Page)Activator.CreateInstance(typeof(ViewMain)));
-            NavigationPage.SetBackButtonTitle(this, string.Empty);
-            NavigationPage.SetHasBackButton(this, false);
             this.BindingContext = new
             {
-                Header = "",
-                Image = "http://www3.hilton.com/resources/media/hi/GSPSCHF/en_US/img/shared/full_page_image_gallery/main/HH_food_22_675x359_FitToBoxSmallDimension_Center.jpg",
-                Footer = "Welcome To Hotel Plaza"
+                Header = "Header",
+                Image = "https://rorymon.com/blog/wp-content/uploads/2014/09/Raspberry-Pi-Logo1-620x350.png",
+                Footer = "HeatMe"
             };
         }
 
@@ -36,9 +30,8 @@ namespace RMA
         {
             var item = (MasterMenuItem)e.SelectedItem;
             Type page = item.TargetType;
-            Detail = new NavigationPage((Page)Activator.CreateInstance(page));
-            NavigationPage.SetBackButtonTitle(this, string.Empty);
-            NavigationPage.SetHasBackButton(this, false);
+            Navigation.PushModalAsync(new NavigationPage((Page)Activator.CreateInstance(page)));
+
             IsPresented = false;
         }
     }

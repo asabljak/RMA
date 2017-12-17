@@ -34,25 +34,26 @@ namespace RMA.Views
             #endif
 
             #if __IOS__
-                backlight = Foundation.NSUserDefaults.StandardUserDefaults.BoolForKey("pref_backlight");
-                API_URL = Foundation.NSUserDefaults.StandardUserDefaults.StringForKey("pref_api_key");
+                 backlight = Foundation.NSUserDefaults.StandardUserDefaults.BoolForKey("pref_backlight");
+                 API_URL = Foundation.NSUserDefaults.StandardUserDefaults.StringForKey("pref_api_key");
             #endif
-
 
             if (isConnected)
             {
                 RefreshDataAsync();
-
-                //if(SettingsChanged())
-                //{
-                //    SendData();
-                //}
-
             }
             else
             {
                 DisplayAlert("Problem s vezom", "Nemoguće povezivanje s mrežom. Provjerite vezu", "OK");
             }
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            //NavigationPage.SetBackButtonTitle(this, string.Empty);
+           // NavigationPage.SetHasNavigationBar(this, false);
+         
         }
 
         private async void RefreshDataAsync()
@@ -90,12 +91,7 @@ namespace RMA.Views
         }
 
 
-        private void Button_Clicked(object sender, EventArgs e)
-        {
-            SendData();
-        }
-
-        private async void SendData()
+        private async void Button_Clicked(object sender, EventArgs e)
         {
             if (isConnected)
             {
@@ -118,32 +114,6 @@ namespace RMA.Views
         {
             Switch onOffSwitch = this.FindByName<Switch>("onOffSwitch");
             isOn = onOffSwitch.IsToggled;
-        }
-
-        private bool SettingsChanged()
-        {
-             bool backlightNewState;
-             string apiUrlNew;
-
-            #if __ANDROID__
-                Android.Content.ISharedPreferences prefs;
-                prefs = Android.Preferences.PreferenceManager.GetDefaultSharedPreferences(Android.App.Application.Context);
-                backlightNewState = prefs.GetBoolean("pref_backlight", true);
-                apiUrlNew = prefs.GetString("pref_api_url", "http://192.168.1.100");
-            #endif
-
-            #if __IOS__
-                backlightNewState = Foundation.NSUserDefaults.StandardUserDefaults.BoolForKey("pref_backlight");
-                apiUrlNew = Foundation.NSUserDefaults.StandardUserDefaults.StringForKey("pref_api_key");
-            #endif
-
-            if(backlightNewState != backlight || !apiUrlNew.Equals(API_URL))
-            {
-                return true;
-            }
-
-            return false;
-
         }
     }
 }
