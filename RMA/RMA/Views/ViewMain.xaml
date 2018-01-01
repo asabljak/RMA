@@ -3,13 +3,55 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="RMA.Views.ViewMain">
     <ContentPage.Content>
-        <StackLayout>
+        <!--<StackLayout>
             <Entry x:Name="wantedTempInput" Keyboard="Numeric" WidthRequest="10" VerticalOptions="Center"/>
             <Label x:Name="currentTempLbl" Text="Trenutna temperatura: "
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
             <Switch x:Name="onOffSwitch" Toggled="onOffSwitch_Toggled"/>
             <Button Text="batn" Clicked="Button_Clicked"></Button>
+        </StackLayout>-->
+
+        <!--<Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="7*" />
+                <RowDefinition Height="3*" />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="4*" />
+            </Grid.RowDefinitions>
+            <Entry Grid.Row="0" VerticalOptions="Fill" x:Name="wantedTempInput" Keyboard="Numeric"></Entry>
+            <Label Grid.Row="1" x:Name="currentTempLbl" Text="Trenutna temperatura: "
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            <Switch Grid.Row="2" x:Name="onOffSwitch" Toggled="onOffSwitch_Toggled"/>
+            <Button Grid.Row="3" VerticalOptions="Fill">Click me</Button>
+        </Grid>-->
+
+
+
+        <StackLayout>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*" />
+                    <RowDefinition Height="6*" />
+                    <RowDefinition Height="3*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="9*" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="4*" />
+                    <ColumnDefinition Width="3*" />
+                </Grid.ColumnDefinitions>
+
+                <Entry Grid.Row="1" Grid.Column="1" VerticalOptions="Fill" x:Name="wantedTempInput" Keyboard="Numeric" HorizontalTextAlignment="Center" FontSize="55"></Entry>
+                <Label Grid.Row="2" Grid.Column="1" Text="Trenutna temperatura: " VerticalOptions="End" HorizontalOptions="CenterAndExpand" />
+                <Label Grid.Row="3" Grid.Column="1" x:Name="currentTempLbl" VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand" />
+                <Switch Grid.Row="4" Grid.Column="2" x:Name="onOffSwitch" Toggled="onOffSwitch_Toggled"/>
+
+            </Grid>
+            <Button Text="Send" Clicked="Button_Clicked" VerticalOptions="End"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

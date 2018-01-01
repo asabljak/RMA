@@ -60,7 +60,7 @@ namespace RMA.Views
         {
             Data data = await GetDataFromAPI();
 
-            currentTempLbl.Text = data.curTemp.ToString();
+            currentTempLbl.Text = data.curTemp.ToString() + " °C";
             wantedTempInput.Text += data.wanTemp.ToString();
             onOffSwitch.IsToggled = data.isOn;
         }
