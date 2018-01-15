@@ -12,11 +12,7 @@
 
             <StackLayout Orientation="Vertical">
 
-                <!-- 
-             This StackLayout you can use for other
-             data that you want to have in your menu drawer
-        -->
-                <StackLayout.Children >
+               <StackLayout.Children >
                     <Label Text="{Binding Header}" />
 
                     <Image Source="{Binding Image}" Aspect="Fill" />

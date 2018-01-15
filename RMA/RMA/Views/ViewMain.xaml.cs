@@ -9,7 +9,6 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using RMA.Model;
 
-
 namespace RMA.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -46,14 +45,6 @@ namespace RMA.Views
             {
                 DisplayAlert("Problem s vezom", "Nemoguće povezivanje s mrežom. Provjerite vezu", "OK");
             }
-        }
-
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-            //NavigationPage.SetBackButtonTitle(this, string.Empty);
-           // NavigationPage.SetHasNavigationBar(this, false);
-         
         }
 
         private async void RefreshDataAsync()
@@ -106,13 +97,25 @@ namespace RMA.Views
 
                 var json = JsonConvert.SerializeObject(data);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await client.PostAsync(API_URL + "/reciver.php", content);
+
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsync(API_URL + "/reciver.php", content);
+                    #if __ANDROID__
+                        Android.Widget.Toast.MakeText((Android.App.Activity)Forms.Context, "Podaci poslani", Android.Widget.ToastLength.Long).Show();
+                    #endif
+                }
+                catch
+                {
+                    //Toast.MakeText((Android.App.Activity)Forms.Context, "Dogodila se pogreška pri slanju podataka", ToastLength.Long).Show();
+                    await DisplayAlert("Pogreška", "Dogodila se pogreška pri slanju podataka. Provjerite jeste li povezani s poslužiteljem", "OK");
+                }
             }
         }
 
         private void onOffSwitch_Toggled(object sender, ToggledEventArgs e)
         {
-            Switch onOffSwitch = this.FindByName<Switch>("onOffSwitch");
+            Xamarin.Forms.Switch onOffSwitch = this.FindByName<Xamarin.Forms.Switch>("onOffSwitch");
             isOn = onOffSwitch.IsToggled;
         }
     }
